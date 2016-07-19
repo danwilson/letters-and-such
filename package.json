@@ -1,0 +1,15 @@
+{
+  "name": "LettersAndSuch",
+  "version": "0.1.0",
+  "description": "Letters and Such",
+  "author": "Daniel C. Wilson",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~3.4.7",
+    "load-grunt-tasks": "~0.2.0"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
