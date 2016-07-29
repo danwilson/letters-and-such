@@ -398,9 +398,9 @@ function playGame(replay) {
 
   //handle gestures
   //On gesture, see if it matches an active animating (falling) arrow. If so, pop it from active array, pause it (to keep it from triggering "finish" logic), and add an animation on inner element with random 3d rotations that look like the arrow is being kicked away to the distance. Also update score.
-  if (window.PointerEventXX) {
-    // document.body.addEventListener('pointerdown', onPointerDown);
-    // document.body.addEventListener('pointerup', onPointerUp);
+  if (window.PointerEvent) {
+    document.body.addEventListener('pointerdown', onPointerDown);
+    document.body.addEventListener('pointerup', onPointerUp);
   } else {
     document.body.addEventListener('mousedown', onMouseDown);
     document.body.addEventListener('mouseup', onMouseUp);
@@ -408,6 +408,18 @@ function playGame(replay) {
     document.body.addEventListener('touchstart', onTouchStart);
     //document.body.addEventListener('touchmove', function(e) { e.preventDefault(); });
     document.body.addEventListener('touchend', onTouchEnd);
+  }
+  function onPointerDown(e) {
+    activeGestures.pointer[e.pointerId] = {
+      x: e.pageX,
+      y: e.pageY
+    }
+  }
+  function onPointerUp(e) {
+    determineDirection(activeGestures.pointer[e.pointerId], {
+      x: e.pageX,
+      y: e.pageY
+    });
   }
   function onMouseDown(e) {
     activeGestures.mouse = {
