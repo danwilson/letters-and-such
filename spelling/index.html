@@ -434,7 +434,7 @@
         //On key press, see if it matches an active animating (falling) letter. If so, pop it from active array, pause it (to keep it from triggering "finish" logic), and add an animation on inner element with random 3d rotations that look like the letter is being kicked away to the distance. Also update score.
         function onPress(e) {
           var attempt = attemptElement.value;
-          attempt = attempt.toLowerCase();
+          attempt = attempt.trim().toLowerCase();
           if (animations[attempt] && animations[attempt].length) {
             var popped = animations[attempt].pop();
             popped.animation.pause();
