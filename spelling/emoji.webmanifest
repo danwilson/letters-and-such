@@ -1,0 +1,8 @@
+{
+  "name": "Falling emoji",
+  "short_name": "Falling Emoji",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "hsl(203, 80%, 28%)",
+  "background_color": "hsl(203, 80%, 28%)"
+}
