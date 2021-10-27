@@ -1,198 +1,318 @@
-
-
 <!DOCTYPE html>
-<html >
+<html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
 
-      <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex" />
 
     <title>Falling Letters and Such</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-
-
-        <style>
-        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+    <style>
+      html,
+      body,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td,
+      article,
+      aside,
+      canvas,
+      details,
+      embed,
+      figure,
+      figcaption,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      output,
+      ruby,
+      section,
+      summary,
+      time,
+      mark,
+      audio,
+      video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      article,
+      aside,
+      details,
+      figcaption,
+      figure,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      section {
+        display: block;
+      }
+      body {
+        line-height: 1;
+      }
+      ol,
+      ul {
+        list-style: none;
+      }
+      blockquote,
+      q {
+        quotes: none;
+      }
+      blockquote:before,
+      blockquote:after,
+      q:before,
+      q:after {
+        content: "";
+        content: none;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
 
       html {
-  font-size: 62.5%;
-}
+        font-size: 62.5%;
+      }
 
-body {
-  min-height: 100vh;
-  background: #252627;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-  -webkit-align-items: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  color: #eee;
-  font-family: -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-  font-family: monospace;
-  font-size: 5vh;
-  position: relative;
-  text-align: center;
-}
+      body {
+        min-height: 100vh;
+        background: #252627;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: stretch;
+        -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        color: #eee;
+        font-family: -apple-system, "Segoe UI", "Roboto", "Helvetica Neue",
+          sans-serif;
+        font-family: monospace;
+        font-size: 5vh;
+        position: relative;
+        text-align: center;
+      }
 
-main {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  padding: 2rem 0;
-}
-main p {
-  font-size: 1.6rem;
-  text-align: center;
-  margin-top: 1rem;
-  padding: 0 2rem;
-  max-width: 32rem;
-  line-height: 1.4;
-}
+      main {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        padding: 2rem 0;
+      }
+      main p {
+        font-size: 1.6rem;
+        text-align: center;
+        margin-top: 1rem;
+        padding: 0 2rem;
+        max-width: 32rem;
+        line-height: 1.4;
+      }
 
-header {
-  min-height: 5vh;
-  line-height: 1;
-  font-size: 3vh;
-  background: #aa6657;
-  padding: 1vh 2.5vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
+      header {
+        min-height: 5vh;
+        line-height: 1;
+        font-size: 3vh;
+        background: #aa6657;
+        padding: 1vh 2.5vh;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
 
-ul {
-  margin-top: 2rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-ul li {
-  margin-top: 2rem;
-  max-width: 32rem;
-}
+      ul {
+        margin-top: 2rem;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
+      ul li {
+        margin-top: 2rem;
+        max-width: 32rem;
+      }
 
-@media all and (min-width: 42em) {
-  ul {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-  }
-}
-a {
-  text-decoration: none;
-  display: inline-block;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 0;
-  border: 0.3rem solid #eee;
-  color: #eee;
-  font-size: 3rem;
-  padding: 1.5rem 2rem;
-  background: transparent;
-  margin-top: 3rem;
-  font-family: monospace;
-}
-a:hover, a:active, a:focus {
-  border-color: #aa6657;
-}
+      @media all and (min-width: 42em) {
+        ul {
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-direction: row;
+        }
+      }
+      a {
+        text-decoration: none;
+        display: inline-block;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0;
+        border: 0.3rem solid #eee;
+        color: #eee;
+        font-size: 3rem;
+        padding: 1.5rem 2rem;
+        background: transparent;
+        margin-top: 3rem;
+        font-family: monospace;
+      }
+      a:hover,
+      a:active,
+      a:focus {
+        border-color: #aa6657;
+      }
 
-.jr a {
-  background: #eee;
-  font-weight: bold;
-  color: magenta;
-  font-size: 4rem;
-}
-a:hover, a:active, a:focus {
-  border-color: cyan;
-}
-
+      .jr a {
+        background: #eee;
+        font-weight: bold;
+        color: magenta;
+        font-size: 4rem;
+      }
+      a:hover,
+      a:active,
+      a:focus {
+        border-color: cyan;
+      }
     </style>
-
-
-
-
   </head>
 
-  <body translate="no" >
-
+  <body translate="no">
     <header>Falling Letters &amp;&nbsp;Such</header>
-<main id="main">
-  <p>Letters (and such) will&nbsp;fall...</p>
-  <p>Don't let them hit the&nbsp;ground</p>
-  <ul>
-    <li>
-      <a href="/letters">Letters</a>
-      <p>Match the letters on&nbsp;a&nbsp;Keyboard</p>
-    </li>
-    <li>
-      <a href="/gestures">Gestures</a>
-      <p>Swipe the directed&nbsp;direction</p>
-    </li>
-    <li>
-      <a href="/numbers">Numbers</a>
-      <p>Match the numbers on a Keyboard/NumPad</p>
-    </li>
-  </ul>
-  <ul class="jr">
-    <li>
-      <a href="/jrletters">ABCs</a>
-      <p>The Jr. Edition!</p>
-    </li>
-    <li>
-      <a href="/jrnumbers">123s</a>
-      <p>The Jr. Edition!</p>
-    </li>
-    <li>
-      <a href="/jrmath">+-</a>
-      <p>Jr. Math Problems!</p>
-    </li>
-  </ul>
-</main>
+    <main id="main">
+      <p>Letters (and such) will&nbsp;fall...</p>
+      <p>Don't let them hit the&nbsp;ground</p>
+      <ul>
+        <li>
+          <a href="/letters">Letters</a>
+          <p>Match the letters on&nbsp;a&nbsp;Keyboard</p>
+        </li>
+        <li>
+          <a href="/gestures">Gestures</a>
+          <p>Swipe the directed&nbsp;direction</p>
+        </li>
+        <li>
+          <a href="/numbers">Numbers</a>
+          <p>Match the numbers on a Keyboard/NumPad</p>
+        </li>
+      </ul>
+      <ul class="jr">
+        <li>
+          <a href="/jrletters">ABCs</a>
+          <p>The Jr. Edition!</p>
+        </li>
+        <li>
+          <a href="/jrnumbers">123s</a>
+          <p>The Jr. Edition!</p>
+        </li>
+        <li>
+          <a href="/jrmath">+-</a>
+          <p>Jr. Math Problems!</p>
+        </li>
+        <li>
+          <a href="/spelling">☺️</a>
+          <p>Spelling!</p>
+        </li>
+      </ul>
+    </main>
   </body>
 </html>
-
