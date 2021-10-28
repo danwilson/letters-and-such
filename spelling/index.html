@@ -91,7 +91,7 @@
         text-align: right;
         padding: 95vh 3vmin 0 3vmin;
 
-        font-size: 3vmin;
+        font-size: 3vh;
         color: var(--light);
         text-transform: uppercase;
         cursor: pointer;
@@ -99,8 +99,8 @@
       #current-result {
         position: absolute;
         right: 3vmin;
-        bottom: 0.667vh;
-        font-size: 3vmin;
+        bottom: 0.75vh;
+        font-size: 3vh;
         color: var(--light);
         text-transform: uppercase;
         opacity: 0;
@@ -322,6 +322,34 @@
             problem: "🌙",
             answer: "moon",
           },
+          {
+            problem: "🛷",
+            answer: "sled",
+          },
+          {
+            problem: "🥁",
+            answer: "drum",
+          },
+          {
+            problem: "🚗",
+            answer: "car",
+          },
+          {
+            problem: "🔒",
+            answer: "lock",
+          },
+          {
+            problem: "🏳️",
+            answer: "flag",
+          },
+          {
+            problem: "🦉",
+            answer: "owl",
+          },
+          {
+            problem: "🌲",
+            answer: "tree",
+          },
           /*{
             problem: "",
             answer: "",
@@ -481,18 +509,17 @@
                 },
                 {
                   opacity: 1,
-                  transform: "translateX(-6rem)",
                   offset: 0.6,
                 },
                 {
                   opacity: 0,
-                  transform: "translateX(-6rem)",
+                  transform: "translateX(-250%)",
                   offset: 1,
                 },
               ],
               {
-                duration: 1000,
-                easing: "ease-in-out",
+                duration: 800,
+                easing: "ease-out",
               }
             );
           }
