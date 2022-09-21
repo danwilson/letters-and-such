@@ -355,6 +355,46 @@
             problem: "⭐️",
             answer: "star",
           },
+          {
+            problem: "🐴",
+            answer: "horse",
+          },
+          {
+            problem: "🐠",
+            answer: "fish",
+          },
+          {
+            problem: "🦀",
+            answer: "crab",
+          },
+          {
+            problem: "🐑",
+            answer: "sheep",
+          },
+          {
+            problem: "☀️",
+            answer: "sun",
+          },
+          {
+            problem: "🔥",
+            answer: "fire",
+          },
+          {
+            problem: "🌧",
+            answer: "rain",
+          },
+          {
+            problem: "🌽",
+            answer: "corn",
+          },
+          {
+            problem: "🍚",
+            answer: "rice",
+          },
+          {
+            problem: "🛞",
+            answer: "wheel",
+          },
           /*{
             problem: "",
             answer: "",
@@ -363,7 +403,7 @@
         var animations = {};
         var gameOn = true;
         var timeOffset = 8000; //interval between letters starting, will be faster over time
-        var DURATION = 25000;
+        var DURATION = 30000;
         var main = document.getElementById("main");
         var header = document.querySelector("header");
         var scoreElement = document.getElementById("score");
@@ -444,7 +484,6 @@
 
         //Periodically remove missed elements, and lower the interval between falling elements
         var cleanupInterval = setInterval(function () {
-          timeOffset = timeOffset * 0.975;
           cleanup();
         }, 20000);
         function cleanup() {
