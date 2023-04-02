@@ -1,0 +1,547 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Falling Math Jr. 2</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <meta name="theme-color" content="#0e5581" />
+    <link href="math.webmanifest" rel="manifest" />
+    <style>
+      :root {
+        --light: #eaebee;
+        --dark: #252627;
+        --bar: hsl(203, 80%, 28%);
+        --bar2: hsl(183, 80%, 78%);
+      }
+      body {
+        height: 100vh;
+        background: var(--dark);
+        overflow: hidden;
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        color: var(--light);
+        font-family: system-ui, -apple-system, "Segoe UI", "Roboto",
+          "Helvetica Neue", sans-serif;
+        font-size: 5vh;
+        position: relative;
+        user-select: none;
+        letter-spacing: 0.02em;
+      }
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      main p {
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 5vh;
+        padding: 0 2rem;
+        max-width: 30rem;
+        line-height: 1.4;
+      }
+      header,
+      footer {
+        height: 5vh;
+        font-size: 3vmin;
+        background: var(--bar);
+        color: var(--light);
+        text-align: right;
+        text-transform: uppercase;
+        padding: 0 2.5vmin;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      header {
+        justify-content: space-between;
+      }
+      header ul {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+      header ul .misses {
+        padding: 0.5vh;
+        transition: all 0.225s ease-out;
+      }
+      header ul .misses.missed {
+        opacity: 0.4;
+        transform: rotate(-45deg);
+      }
+
+      #attempt {
+        appearance: none;
+        background: transparent;
+        border: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        text-align: right;
+        padding: 95vh 3vmin 0 3vmin;
+
+        font-size: 3vh;
+        color: var(--light);
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      #current-result {
+        position: absolute;
+        right: 3vmin;
+        bottom: 0.75vh;
+        font-size: 3vh;
+        color: var(--light);
+        text-transform: uppercase;
+        opacity: 0;
+      }
+
+      main > div {
+        position: absolute;
+        top: 0vh;
+        left: 0;
+        width: 35vh;
+        text-transform: uppercase;
+        perspective: 300px;
+        transition: opacity 0.7s ease-in;
+        font-size: 5vh;
+        line-height: 1;
+        font-weight: 400;
+      }
+      main > div.popped {
+        opacity: 0;
+      }
+      main > div.popped > span {
+        animation-play-state: paused;
+      }
+      main > div.popped > span b {
+        opacity: 0;
+      }
+      main > div.missed {
+        opacity: 0;
+      }
+      main > div.missed > span {
+        animation-play-state: paused;
+      }
+      main > div > span {
+        position: absolute;
+        display: inline-block;
+        animation: waver 2s infinite alternate ease-in-out;
+        perspective: 300px;
+      }
+
+      main > div > span b {
+        display: inline-block;
+        padding: 2.5vh;
+        transition: opacity 0.25s linear;
+      }
+
+      @keyframes waver {
+        100% {
+          transform: translate3d(6vw, 0, 0);
+        }
+      }
+
+      #game-over {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.75s ease-out;
+        background: rgba(0, 0, 0, 0.75);
+
+        position: absolute;
+        top: 5vh;
+        right: 0;
+        bottom: 5vh;
+        left: 0;
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        text-transform: uppercase;
+        z-index: 30;
+      }
+      #game-over.indeed {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      button {
+        appearance: none;
+        border-radius: 0;
+        border: 0.3rem solid var(--bar);
+        color: var(--bar);
+        font-size: 3vh;
+        padding: 1.5vh 2vh;
+        background: hsla(183, 80%, 98%, 1.25);
+        margin-top: 5vh;
+        font-family: system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.075em;
+        z-index: 5;
+      }
+      button:hover {
+        background: var(--bar2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+        <li class="misses">+</li>
+      </ul>
+      <div id="score">0</div>
+    </header>
+    <main id="main"></main>
+    <footer>
+      <input id="attempt" />
+      <p id="current-result"></p>
+    </footer>
+    <div id="game-over">
+      <p>Game Over</p>
+    </div>
+    <script>
+      loadGame();
+
+      function loadGame() {
+        var button = document.createElement("button");
+        button.textContent = "Start Game";
+        var main = document.getElementById("main");
+        main.appendChild(button);
+        var rules = document.createElement("p");
+        rules.textContent =
+          "Math problems will fall... if you have a keyboard, press the correct answer to knock it away before it hits the ground";
+        main.appendChild(rules);
+        /* button.addEventListener("click", function startIt(e) {
+          main.textContent = "";
+          playGame();
+        }); */
+        document.getElementById("attempt").addEventListener(
+          "click",
+          function startIt2(e) {
+            main.textContent = "";
+            playGame();
+          },
+          {
+            once: true,
+          }
+        );
+      }
+
+      function playGame(replay) {
+        var VALUES_ADD = {
+          basic: [0, 1, 2, 3, 4],
+          medium: [
+            10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+            44, 45, 46, 47, 48, 49,
+          ],
+          hard: [
+            110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
+            123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135,
+            136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148,
+            149,
+          ],
+        };
+        var VALUES_SUB = {
+          basic: [0, 1, 2, 3, 4, 5],
+          medium: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+          hard: [
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+            19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+          ],
+        };
+        var VALUES_MUL = {
+          basic: [0, 1, 2, 3, 4, 5],
+          medium: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+          hard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        };
+        var VALUES_DIV = {
+          basic: [0, 1, 2, 3, 4, 5],
+          medium: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+          hard: [
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+            19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+          ],
+        };
+        var animations = {};
+        var gameOn = true;
+        var timeOffset = 8000; //interval between letters starting, will be faster over time
+        var DURATION = 25000;
+        var main = document.getElementById("main");
+        var header = document.querySelector("header");
+        var scoreElement = document.getElementById("score");
+        var attemptElement = document.getElementById("attempt");
+        var resultElement = document.getElementById("current-result");
+        var score = parseFloat(scoreElement.textContent);
+        var rate = 1;
+        var RATE_INTERVAL = 0.0125; //playbackRate will increase by .05 for each letter... so after 20 letters, the rate of falling will be 2x what it was at the start
+        var misses = 0;
+        var attempt = "";
+
+        function generateMathProblem() {
+          var op = Math.floor(Math.random() * 3);
+          var mode = "basic";
+          if (score > 600) {
+            mode = "hard";
+          } else if (score > 20) {
+            mode = "medium";
+          }
+          if (op === 0) {
+            var a =
+              VALUES_SUB[mode][
+                Math.floor(Math.random() * VALUES_SUB[mode].length)
+              ];
+            var b =
+              VALUES_SUB[mode][
+                Math.floor(Math.random() * VALUES_SUB[mode].length)
+              ];
+            return {
+              answer: "" + Math.abs(a - b).toFixed(0),
+              problem: a > b ? `${a} - ${b}` : `${b} - ${a}`,
+            };
+          } else if (op === 1) {
+            var a =
+              VALUES_ADD[mode][
+                Math.floor(Math.random() * VALUES_ADD[mode].length)
+              ];
+            var b =
+              VALUES_ADD[mode][
+                Math.floor(Math.random() * VALUES_ADD[mode].length)
+              ];
+            return {
+              answer: "" + (a + b).toFixed(0),
+              problem: `${a} + ${b}`,
+            };
+          } else if (op === 2) {
+            var a =
+              VALUES_MUL[mode][
+                Math.floor(Math.random() * VALUES_ADD[mode].length)
+              ];
+            var b =
+              VALUES_MUL[mode][
+                Math.floor(Math.random() * VALUES_ADD[mode].length)
+              ];
+            return {
+              answer: "" + (a * b).toFixed(0),
+              problem: a > b ? `${a} × ${b}` : `${b} × ${a}`,
+            };
+          }
+        }
+
+        //Create a letter element and setup its falling animation, add the animation to the active animation array, and setup an onfinish handler that will represent a miss.
+        function create() {
+          var mathProblem = generateMathProblem();
+          var x = Math.random() * 85 + "vw";
+          var container = document.createElement("div");
+          var letter = document.createElement("span");
+          var letterText = document.createElement("b");
+          letterText.textContent = mathProblem.problem;
+          letter.appendChild(letterText);
+          container.appendChild(letter);
+          container.setAttribute("data-answer", mathProblem.answer);
+          main.appendChild(container);
+          var animation = container.animate(
+            [
+              { transform: "translate3d(" + x + ",-12vh,0)" },
+              { transform: "translate3d(" + x + ",83vh,0)" },
+            ],
+            {
+              duration: DURATION,
+              easing: "linear",
+              fill: "both",
+            }
+          );
+
+          var anims = animations[mathProblem.answer] || [];
+          animations[mathProblem.answer] = [
+            { animation: animation, element: container },
+          ].concat(anims);
+          rate = rate + RATE_INTERVAL;
+          animation.playbackRate = rate;
+
+          //If an animation finishes, we will consider that as a miss, so we will remove it from the active animations array and increment our miss count
+          animation.onfinish = function (e) {
+            var target = container;
+            var char = target.getAttribute("data-answer");
+
+            animations[char].pop();
+            target.classList.add("missed");
+            handleMisses();
+          };
+        }
+
+        //When a miss is registered, check if we have reached the max number of misses
+        function handleMisses() {
+          misses++;
+          var missedMarker = document.querySelector(".misses:not(.missed)");
+          if (missedMarker) {
+            missedMarker.classList.add("missed");
+          } else {
+            gameOver();
+          }
+        }
+
+        //End game and show screen
+        function gameOver() {
+          gameOn = false;
+          clearInterval(cleanupInterval);
+          getAllAnimations().forEach(function (anim) {
+            anim.pause();
+          });
+
+          //Could use Web Animations API here, but showing how you can use a mix of Web Animations API and CSS transistions
+          var gameover = document.getElementById("game-over");
+          gameover.textContent = `Good Job... You got ${scoreElement.textContent}!`;
+          gameover.classList.add("indeed");
+        }
+
+        //Periodically remove missed elements, and lower the interval between falling elements
+        var cleanupInterval = setInterval(function () {
+          timeOffset = timeOffset * 0.975;
+          cleanup();
+        }, 20000);
+        function cleanup() {
+          [].slice
+            .call(main.querySelectorAll(".missed"))
+            .forEach(function (missed) {
+              main.removeChild(missed);
+            });
+        }
+
+        //Firefox 48 supports document.getAnimations as per latest spec, Chrome 52 and polyfill use older spec
+        function getAllAnimations() {
+          if (document.getAnimations) {
+            return document.getAnimations();
+          } else if (document.timeline && document.timeline.getAnimations) {
+            return document.timeline.getAnimations();
+          }
+          return [];
+        }
+
+        //On key press, see if it matches an active animating (falling) letter. If so, pop it from active array, pause it (to keep it from triggering "finish" logic), and add an animation on inner element with random 3d rotations that look like the letter is being kicked away to the distance. Also update score.
+        function onPress(e) {
+          var attempt = attemptElement.value;
+          attempt = attempt.trim().toLowerCase();
+          if (animations[attempt] && animations[attempt].length) {
+            var popped = animations[attempt].pop();
+            popped.animation.pause();
+            var target = popped.element.querySelector("b");
+            var degs = [
+              Math.random() * 1000 - 500,
+              Math.random() * 1000 - 500,
+              Math.random() * 2000 - 1000,
+            ];
+            target.animate(
+              [
+                {
+                  transform:
+                    "scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg)",
+                  opacity: 1,
+                },
+                {
+                  transform:
+                    "scale(0) rotateX(" +
+                    degs[0] +
+                    "deg) rotateY(" +
+                    degs[1] +
+                    "deg) rotateZ(" +
+                    degs[2] +
+                    "deg)",
+                  opacity: 0,
+                },
+              ],
+              {
+                duration: Math.random() * 500 + 850,
+                easing: "ease-out",
+                fill: "both",
+              }
+            );
+            addScore();
+            attemptElement.value = "";
+            resultElement.textContent = attempt;
+            resultElement.animate(
+              [
+                {
+                  opacity: 1,
+                  transform: "translateX(0)",
+                },
+                {
+                  opacity: 1,
+                  offset: 0.6,
+                },
+                {
+                  opacity: 0,
+                  transform: "translateX(-250%)",
+                  offset: 1,
+                },
+              ],
+              {
+                duration: 800,
+                easing: "ease-out",
+              }
+            );
+          }
+        }
+        function addScore() {
+          score++;
+          scoreElement.textContent = score;
+        }
+
+        attemptElement.addEventListener("input", onPress);
+
+        //start the letters falling... create the element+animation, and setup timeout for next letter to start
+        function setupNextLetter() {
+          if (gameOn) {
+            create();
+            setTimeout(function () {
+              setupNextLetter();
+            }, timeOffset);
+          }
+        }
+        setupNextLetter();
+      }
+    </script>
+  </body>
+</html>

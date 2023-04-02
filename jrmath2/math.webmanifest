@@ -1,0 +1,8 @@
+{
+  "name": "Falling Math 2",
+  "short_name": "Math 2",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#0e5581",
+  "background_color": "#0e5581"
+}
