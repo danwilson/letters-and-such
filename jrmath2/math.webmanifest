@@ -3,6 +3,6 @@
   "short_name": "Math 2",
   "scope": "/",
   "display": "standalone",
-  "theme_color": "#0e5581",
-  "background_color": "#0e5581"
+  "theme_color": "hsl(346, 100%, 42%)",
+  "background_color": "#252627"
 }
